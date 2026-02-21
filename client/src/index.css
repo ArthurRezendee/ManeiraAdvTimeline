@@ -33,19 +33,19 @@
 }
 
 :root {
-  --background: 0 0% 100%;
-  --foreground: 204 63% 11%;
+  --background: 210 20% 98%;
+  --foreground: 222 47% 11%;
   
-  --primary: 204 63% 11%; /* Petroleum Blue */
+  --primary: 215 28% 23%; /* Header color from image */
   --primary-foreground: 0 0% 100%;
 
-  --secondary: 214 52% 24%; /* Grayish Blue */
+  --secondary: 214 15% 35%; 
   --secondary-foreground: 0 0% 100%;
 
-  --muted: 0 0% 96%; /* Light Gray */
-  --muted-foreground: 214 52% 24%;
+  --muted: 210 20% 96%; 
+  --muted-foreground: 215 16% 47%;
 
-  --accent: 354 64% 33%; /* Discreet Red */
+  --accent: 12 76% 56%; /* The specific coral/red from the button in image */
   --accent-foreground: 0 0% 100%;
 
   --destructive: 0 84.2% 60.2%;
@@ -53,45 +53,15 @@
 
   --border: 214 32% 91%;
   --input: 214 32% 91%;
-  --ring: 204 63% 11%;
+  --ring: 215 28% 23%;
   
   --card: 0 0% 100%;
-  --card-foreground: 204 63% 11%;
+  --card-foreground: 222 47% 11%;
   
   --popover: 0 0% 100%;
-  --popover-foreground: 204 63% 11%;
+  --popover-foreground: 222 47% 11%;
 
-  --radius: 0.25rem;
-}
-
-.dark {
-  --background: 204 63% 11%;
-  --foreground: 0 0% 98%;
-  
-  --primary: 0 0% 98%;
-  --primary-foreground: 204 63% 11%;
-
-  --secondary: 214 52% 24%;
-  --secondary-foreground: 0 0% 98%;
-
-  --muted: 214 52% 16%;
-  --muted-foreground: 214 20% 65%;
-
-  --accent: 354 64% 33%;
-  --accent-foreground: 0 0% 98%;
-
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 0 0% 98%;
-
-  --border: 214 52% 24%;
-  --input: 214 52% 24%;
-  --ring: 0 0% 98%;
-
-  --card: 214 52% 16%;
-  --card-foreground: 0 0% 98%;
-  
-  --popover: 204 63% 11%;
-  --popover-foreground: 0 0% 98%;
+  --radius: 0.5rem;
 }
 
 @layer base {
@@ -101,22 +71,20 @@
   body {
     @apply font-sans antialiased bg-background text-foreground;
   }
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-serif;
-  }
 }
 
-/* Custom scrollbar for timeline */
-::-webkit-scrollbar {
-  width: 8px;
+.bg-nav {
+  background-color: #404b5a; /* Matching header color from image */
 }
-::-webkit-scrollbar-track {
-  background: hsl(var(--muted));
+
+.text-brand {
+  color: #404b5a;
 }
-::-webkit-scrollbar-thumb {
-  background: hsl(var(--secondary));
-  border-radius: 4px;
+
+.bg-brand-accent {
+  background-color: #e35a44; /* Matching button color from image */
 }
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--primary));
+
+.border-brand-accent {
+  border-color: #e35a44;
 }
