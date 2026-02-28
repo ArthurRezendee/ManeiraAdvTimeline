@@ -228,7 +228,10 @@ export default function Home() {
         </div>
 
         {/* Horizontal Scroll Area */}
-        <div className="flex gap-40 items-start px-[15vw] pb-32 min-w-max">
+        <div className="flex gap-0 items-start px-[20vw] pb-32 min-w-max relative">
+          {/* Continuous Background Line */}
+          <div className="absolute top-[180px] left-0 right-0 h-px bg-accent/20 -z-10" />
+          
           {timelineData.map((item, index) => (
             <motion.div 
               key={item.year}
@@ -236,41 +239,43 @@ export default function Home() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "0px -100px 0px -100px" }}
               transition={{ duration: 0.8 }}
-              className="flex-shrink-0 w-[450px] md:w-[550px] group relative"
+              className="flex-shrink-0 w-[500px] md:w-[650px] group relative flex flex-col items-center px-20"
               data-testid={`timeline-item-${item.year}`}
             >
-              {/* Horizontal Line Connector */}
-              {index !== timelineData.length - 1 && (
-                <div className="absolute top-4 left-[calc(100%+1.5rem)] w-32 h-px bg-accent/20 -z-10 group-hover:bg-accent/40 transition-colors duration-700" />
-              )}
-              
-              <div className="relative pt-16 border-t border-accent/30 group-hover:border-accent transition-colors duration-700">
-                {/* Year Dot */}
-                <div className="absolute top-[-8px] left-0 w-4 h-4 bg-accent rounded-full shadow-[0_0_20px_rgba(227,90,68,0.5)] z-10 transition-transform duration-500 group-hover:scale-125" />
-                
-                <span className="text-accent font-serif text-7xl md:text-8xl mb-8 block font-bold tracking-tighter transition-all group-hover:translate-x-2 duration-700">
+              {/* Year & Dot Container (Centralized) */}
+              <div className="relative mb-12 flex flex-col items-center">
+                <span className="text-accent font-serif text-8xl md:text-9xl mb-4 block font-bold tracking-tighter transition-all group-hover:scale-105 duration-700 leading-none">
                   {item.year}
                 </span>
                 
-                <div className="mb-10 rounded-sm overflow-hidden aspect-[16/9] shadow-2xl group-hover:shadow-[0_20px_50px_rgba(0,0,0,0.2)] transition-all duration-700">
+                {/* Central Dot on the line */}
+                <div className="w-5 h-5 bg-accent rounded-full shadow-[0_0_25px_rgba(227,90,68,0.6)] z-10 transition-transform duration-500 group-hover:scale-150 relative">
+                  <div className="absolute inset-0 bg-white rounded-full scale-[0.3]" />
+                </div>
+              </div>
+              
+              <div className="w-full">
+                <div className="mb-10 rounded-sm overflow-hidden aspect-[16/9] shadow-2xl group-hover:shadow-[0_20px-60px_rgba(0,0,0,0.3)] transition-all duration-700">
                   <img 
                     src={item.image} 
                     alt={item.title} 
-                    className="w-full h-full object-cover grayscale-[15%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 ease-out" 
+                    className="w-full h-full object-cover grayscale-[10%] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-out" 
                   />
                 </div>
                 
-                <h3 className="text-3xl font-serif text-primary mb-6 min-h-[4rem] flex items-center leading-tight">
-                  {item.title}
-                </h3>
-                
-                <div className="space-y-6 max-w-lg">
-                  <p className="text-lg text-muted-foreground font-light leading-relaxed">
-                    {item.description}
-                  </p>
-                  <p className="text-base text-muted-foreground/70 font-light leading-relaxed border-l-2 border-accent/40 pl-6 py-2 italic bg-accent/5 rounded-r-lg">
-                    {item.details}
-                  </p>
+                <div className="text-center max-w-lg mx-auto">
+                  <h3 className="text-3xl font-serif text-primary mb-6 min-h-[4rem] flex items-center justify-center leading-tight">
+                    {item.title}
+                  </h3>
+                  
+                  <div className="space-y-6">
+                    <p className="text-lg text-muted-foreground font-light leading-relaxed">
+                      {item.description}
+                    </p>
+                    <p className="text-base text-muted-foreground/70 font-light leading-relaxed border-t border-accent/20 pt-6 italic mx-auto max-w-md">
+                      {item.details}
+                    </p>
+                  </div>
                 </div>
               </div>
             </motion.div>
