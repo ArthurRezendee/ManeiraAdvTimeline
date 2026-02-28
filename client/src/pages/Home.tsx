@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import heroOffice from "@/assets/images/hero-office.jpg";
 import justiceScale from "@/assets/images/justice-scale.jpg";
+import logo from "@/assets/images/logo.png";
 
 // Images for checkpoints
 import img2016 from "@/assets/images/2016-sede-rj.jpg";
@@ -130,11 +131,9 @@ export default function Home() {
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-primary text-white border-b border-white/10 transition-all duration-300">
         <div className="container mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-white rounded flex items-center justify-center">
-              <span className="text-primary font-serif font-bold text-xl leading-none">M</span>
-            </div>
-            <span className="font-serif text-xl tracking-wide font-medium">
+          <div className="flex items-center gap-4">
+            <img src={logo} alt="Maneira Advogados" className="h-10 w-auto" />
+            <span className="font-serif text-xl tracking-wide font-medium hidden sm:block">
               MANEIRA <span className="font-light">ADVOGADOS</span>
             </span>
           </div>
@@ -219,60 +218,65 @@ export default function Home() {
       </section>
 
       {/* Timeline Section */}
-      <section id="linha-do-tempo" className="py-32 relative" ref={containerRef}>
+      <section id="linha-do-tempo" className="py-32 relative bg-muted/10 overflow-hidden" ref={containerRef}>
         <div className="container mx-auto px-6">
-          <div className="text-center mb-24">
+          <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-serif text-primary mb-4">Evolução Institucional</h2>
             <div className="w-12 h-1 bg-accent mx-auto" />
-            <p className="text-muted-foreground uppercase tracking-widest text-sm font-medium mt-4">Os marcos da nossa história</p>
+            <p className="text-muted-foreground uppercase tracking-widest text-sm font-medium mt-4">Nossa trajetória em movimento</p>
           </div>
 
-          <div className="relative max-w-6xl mx-auto">
-            {/* Center Line */}
-            <div className="absolute left-[24px] md:left-1/2 top-0 bottom-0 w-px bg-border/80 transform md:-translate-x-1/2" />
-            
-            {/* Timeline Items */}
-            <div className="space-y-32">
-              {timelineData.map((item, index) => {
-                const isEven = index % 2 === 0;
-                return (
-                  <motion.div 
-                    key={item.year}
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-150px" }}
-                    transition={{ duration: 0.7, delay: 0.1 }}
-                    className={`relative flex flex-col md:flex-row gap-8 md:gap-0 ${isEven ? 'md:flex-row-reverse' : ''}`}
-                    data-testid={`timeline-item-${item.year}`}
-                  >
-                    {/* Center Node */}
-                    <div className="absolute left-[24px] md:left-1/2 w-3 h-3 bg-background border-2 border-accent rounded-full transform -translate-x-1/2 mt-2 md:mt-0 md:top-0 md:translate-y-4 z-10 shadow-[0_0_0_4px_hsl(var(--background))]" />
+          {/* Horizontal Scroll Container */}
+          <div className="relative">
+            <motion.div 
+              style={{ x: useTransform(scrollYProgress, [0, 1], ["0%", "-80%"]) }}
+              className="flex gap-12 items-start py-12 px-4"
+            >
+              {timelineData.map((item, index) => (
+                <motion.div 
+                  key={item.year}
+                  initial={{ opacity: 0, x: 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: index * 0.1 }}
+                  className="flex-shrink-0 w-[350px] md:w-[450px] group"
+                  data-testid={`timeline-item-${item.year}`}
+                >
+                  <div className="relative pl-8 border-l border-accent/30 pb-12 group-hover:border-accent transition-colors duration-500">
+                    {/* Year Dot */}
+                    <div className="absolute left-[-6px] top-0 w-3 h-3 bg-accent rounded-full shadow-[0_0_15px_rgba(227,90,68,0.4)]" />
                     
-                    {/* Content Half */}
-                    <div className="w-full md:w-1/2 pl-16 md:pl-0">
-                      <div className={`md:px-12 ${isEven ? 'md:text-left' : 'md:text-right'}`}>
-                        <span className="text-accent font-serif text-6xl md:text-7xl mb-4 block opacity-10 font-bold tracking-tighter">
-                          {item.year}
-                        </span>
-                        <div className="mb-6 rounded-lg overflow-hidden aspect-video shadow-lg">
-                          <img src={item.image} alt={item.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
-                        </div>
-                        <h3 className="text-2xl font-serif text-primary mb-4">{item.title}</h3>
-                        <p className="text-muted-foreground font-light leading-relaxed mb-4">
-                          {item.description}
-                        </p>
-                        <p className="text-sm text-muted-foreground/80 font-light leading-relaxed border-l-2 border-accent pl-4 md:border-l-0 md:pl-0 md:border-t md:pt-4 inline-block">
-                          {item.details}
-                        </p>
-                      </div>
+                    <span className="text-accent font-serif text-5xl md:text-6xl mb-6 block font-bold tracking-tighter transition-transform group-hover:scale-110 origin-left duration-500">
+                      {item.year}
+                    </span>
+                    
+                    <div className="mb-8 rounded-sm overflow-hidden aspect-[4/3] shadow-xl group-hover:shadow-2xl transition-all duration-500">
+                      <img 
+                        src={item.image} 
+                        alt={item.title} 
+                        className="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" 
+                      />
                     </div>
+                    
+                    <h3 className="text-2xl font-serif text-primary mb-4 min-h-[4rem] flex items-center">
+                      {item.title}
+                    </h3>
+                    
+                    <div className="space-y-4">
+                      <p className="text-muted-foreground font-light leading-relaxed">
+                        {item.description}
+                      </p>
+                      <p className="text-sm text-muted-foreground/80 font-light leading-relaxed border-t border-accent/20 pt-4">
+                        {item.details}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
 
-                    {/* Empty Half for layout */}
-                    <div className="hidden md:block w-1/2" />
-                  </motion.div>
-                );
-              })}
-            </div>
+            {/* Horizontal Line background */}
+            <div className="absolute top-[108px] left-0 right-0 h-px bg-accent/10 -z-10" />
           </div>
         </div>
       </section>
@@ -288,9 +292,7 @@ export default function Home() {
               </p>
             </div>
             <div className="md:text-right">
-              <div className="w-16 h-16 bg-white/10 rounded backdrop-blur-sm flex items-center justify-center mb-6 md:ml-auto">
-                <span className="text-white font-serif font-bold text-3xl leading-none">M</span>
-              </div>
+              <img src={logo} alt="Maneira Advogados" className="h-12 w-auto mb-6 md:ml-auto brightness-0 invert" />
               <p className="text-sm tracking-widest uppercase text-white/50 font-medium">
                 Feito por pessoas e para pessoas.
               </p>
