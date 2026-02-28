@@ -32,6 +32,14 @@
   --font-serif: 'Playfair Display', serif;
 }
 
+@utility hide-scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 :root {
   --background: 210 20% 98%;
   --foreground: 222 47% 11%;

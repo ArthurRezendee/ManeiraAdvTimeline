@@ -218,66 +218,63 @@ export default function Home() {
       </section>
 
       {/* Timeline Section */}
-      <section id="linha-do-tempo" className="py-32 relative bg-muted/10 overflow-hidden" ref={containerRef}>
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
+      <section id="linha-do-tempo" className="py-32 relative bg-muted/10 overflow-x-auto hide-scrollbar select-none" ref={containerRef}>
+        <div className="container mx-auto px-6 mb-24 sticky left-0">
+          <div className="text-center">
             <h2 className="text-4xl md:text-5xl font-serif text-primary mb-4">Evolução Institucional</h2>
             <div className="w-12 h-1 bg-accent mx-auto" />
             <p className="text-muted-foreground uppercase tracking-widest text-sm font-medium mt-4">Nossa trajetória em movimento</p>
           </div>
+        </div>
 
-          {/* Horizontal Scroll Container */}
-          <div className="relative">
+        {/* Horizontal Scroll Area */}
+        <div className="flex gap-40 items-start px-[15vw] pb-32 min-w-max">
+          {timelineData.map((item, index) => (
             <motion.div 
-              style={{ x: useTransform(scrollYProgress, [0, 1], ["0%", "-80%"]) }}
-              className="flex gap-12 items-start py-12 px-4"
+              key={item.year}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "0px -100px 0px -100px" }}
+              transition={{ duration: 0.8 }}
+              className="flex-shrink-0 w-[450px] md:w-[550px] group relative"
+              data-testid={`timeline-item-${item.year}`}
             >
-              {timelineData.map((item, index) => (
-                <motion.div 
-                  key={item.year}
-                  initial={{ opacity: 0, x: 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.7, delay: index * 0.1 }}
-                  className="flex-shrink-0 w-[350px] md:w-[450px] group"
-                  data-testid={`timeline-item-${item.year}`}
-                >
-                  <div className="relative pl-8 border-l border-accent/30 pb-12 group-hover:border-accent transition-colors duration-500">
-                    {/* Year Dot */}
-                    <div className="absolute left-[-6px] top-0 w-3 h-3 bg-accent rounded-full shadow-[0_0_15px_rgba(227,90,68,0.4)]" />
-                    
-                    <span className="text-accent font-serif text-5xl md:text-6xl mb-6 block font-bold tracking-tighter transition-transform group-hover:scale-110 origin-left duration-500">
-                      {item.year}
-                    </span>
-                    
-                    <div className="mb-8 rounded-sm overflow-hidden aspect-[4/3] shadow-xl group-hover:shadow-2xl transition-all duration-500">
-                      <img 
-                        src={item.image} 
-                        alt={item.title} 
-                        className="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" 
-                      />
-                    </div>
-                    
-                    <h3 className="text-2xl font-serif text-primary mb-4 min-h-[4rem] flex items-center">
-                      {item.title}
-                    </h3>
-                    
-                    <div className="space-y-4">
-                      <p className="text-muted-foreground font-light leading-relaxed">
-                        {item.description}
-                      </p>
-                      <p className="text-sm text-muted-foreground/80 font-light leading-relaxed border-t border-accent/20 pt-4">
-                        {item.details}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+              {/* Horizontal Line Connector */}
+              {index !== timelineData.length - 1 && (
+                <div className="absolute top-4 left-[calc(100%+1.5rem)] w-32 h-px bg-accent/20 -z-10 group-hover:bg-accent/40 transition-colors duration-700" />
+              )}
+              
+              <div className="relative pt-16 border-t border-accent/30 group-hover:border-accent transition-colors duration-700">
+                {/* Year Dot */}
+                <div className="absolute top-[-8px] left-0 w-4 h-4 bg-accent rounded-full shadow-[0_0_20px_rgba(227,90,68,0.5)] z-10 transition-transform duration-500 group-hover:scale-125" />
+                
+                <span className="text-accent font-serif text-7xl md:text-8xl mb-8 block font-bold tracking-tighter transition-all group-hover:translate-x-2 duration-700">
+                  {item.year}
+                </span>
+                
+                <div className="mb-10 rounded-sm overflow-hidden aspect-[16/9] shadow-2xl group-hover:shadow-[0_20px_50px_rgba(0,0,0,0.2)] transition-all duration-700">
+                  <img 
+                    src={item.image} 
+                    alt={item.title} 
+                    className="w-full h-full object-cover grayscale-[15%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 ease-out" 
+                  />
+                </div>
+                
+                <h3 className="text-3xl font-serif text-primary mb-6 min-h-[4rem] flex items-center leading-tight">
+                  {item.title}
+                </h3>
+                
+                <div className="space-y-6 max-w-lg">
+                  <p className="text-lg text-muted-foreground font-light leading-relaxed">
+                    {item.description}
+                  </p>
+                  <p className="text-base text-muted-foreground/70 font-light leading-relaxed border-l-2 border-accent/40 pl-6 py-2 italic bg-accent/5 rounded-r-lg">
+                    {item.details}
+                  </p>
+                </div>
+              </div>
             </motion.div>
-
-            {/* Horizontal Line background */}
-            <div className="absolute top-[108px] left-0 right-0 h-px bg-accent/10 -z-10" />
-          </div>
+          ))}
         </div>
       </section>
 
